@@ -6,6 +6,11 @@ SFEQuery::SFEQuery(QueryType atype):_out(&_outblock, QIODevice::WriteOnly),_in(&
 
 }
 
+QueryType SFEQuery::type()
+{
+	return _type;
+}
+
 void SFEQuery::Send(QTcpSocket &socket)
 {
     //set stream release
@@ -65,8 +70,8 @@ void SFEQuery::Receive(QTcpSocket &socket)
 
     qDebug("got type: %d",type);
 
-    if (type!=(quint32)_type)
+    if (_type!=SFEQuery::NOTYPE && type!=(quint32)_type)
         qDebug("error type !=");
-
+    _type=(SFEQuery::QueryType)type;
     doReceive();
 }

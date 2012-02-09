@@ -11,14 +11,20 @@ public:
     enum QueryType {
                         FILE,
                         LIST,
+			NOTYPE,
                         UNDEFINED
     };
 
     SFEQuery(QueryType atype);
 
+    QueryType type();
+
     void Send(QTcpSocket &socket);
     void Receive(QTcpSocket &socket);
 
+/*    void writeBlock(&QByteArray);
+    QByteArray readBlock();
+*/
     virtual void doSend() = 0;
     virtual void doReceive() = 0;
 
