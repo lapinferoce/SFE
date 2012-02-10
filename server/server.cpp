@@ -39,7 +39,7 @@ void Server::startRead()
     SFEQuery* query;
     query = new SFEFileQuery("./tmp/");
     SFEProtocole protocole(*client);
-    protocole.Receive(query);
+    query = protocole.Receive();
     delete query;
     client->close();
     qDebug(">> done");

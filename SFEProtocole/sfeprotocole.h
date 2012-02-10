@@ -2,9 +2,10 @@
 #define SFEPROTOCOLE_H
 
 #include <QTcpSocket>
-#include "sfenotypequery.h"
-#include "sfequery.h"
 
+#include "sfequery.h"
+#include "sfenotypequery.h"
+#include "sfefilequery.h"
 #include "SFEProtocole_global.h"
 
 class SFEPROTOCOLESHARED_EXPORT SFEProtocole {

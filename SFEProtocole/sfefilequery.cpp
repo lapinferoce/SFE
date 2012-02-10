@@ -5,7 +5,6 @@
 {
 
 }*/
-
 SFEFileQuery::SFEFileQuery():SFEQuery(SFEQuery::FILE)
 {
     _filename = "";

@@ -11,10 +11,10 @@ QT += network
 HEADERS += server.h
 SOURCES += main.cpp server.cpp
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../SFEProtocole/SFEProtocole/release/ -lSFEProtocole
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../SFEProtocole/SFEProtocole/debug/ -lSFEProtocole
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../SFEProtocole/release/ -lSFEProtocole
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../SFEProtocole/debug/ -lSFEProtocole
 else:symbian: LIBS += -lSFEProtocole
-else:unix: LIBS += -L$$PWD/../SFEProtocole/SFEProtocole/ -lSFEProtocole
+else:unix: LIBS += -L$$PWD/../SFEProtocole/ -lSFEProtocole
 
-INCLUDEPATH += $$PWD/../SFEProtocole/SFEProtocole
-DEPENDPATH += $$PWD/../SFEProtocole/SFEProtocole
+INCLUDEPATH += $$PWD/../SFEProtocole
+DEPENDPATH += $$PWD/../SFEProtocole

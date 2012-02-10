@@ -15,12 +15,15 @@ DEFINES += SFEPROTOCOLE_LIBRARY
 
 SOURCES += sfeprotocole.cpp \
     sfequery.cpp \
-    sfefilequery.cpp
+    sfefilequery.cpp \
+    sfenotypequery.cpp
+
 
 HEADERS += sfeprotocole.h\
         SFEProtocole_global.h \
     sfequery.h \
-    sfefilequery.h
+    sfefilequery.h \
+    sfenotypequery.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

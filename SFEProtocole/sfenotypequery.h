@@ -6,7 +6,6 @@
 
 #include "SFEProtocole_global.h"
 #include "sfequery.h"
-#include "sfenotypequery.h"
 
 class SFEPROTOCOLESHARED_EXPORT SFENoTypeQuery : public SFEQuery
 {

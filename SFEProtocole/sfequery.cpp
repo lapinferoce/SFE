@@ -1,4 +1,5 @@
 #include "sfequery.h"
+#include "sfenotypequery.h"
 
 SFEQuery::SFEQuery(QueryType atype):_out(&_outblock, QIODevice::WriteOnly),_in(&_inblock, QIODevice::ReadOnly)
 {
@@ -6,10 +7,30 @@ SFEQuery::SFEQuery(QueryType atype):_out(&_outblock, QIODevice::WriteOnly),_in(&
 
 }
 
-QueryType SFEQuery::type()
+void SFEQuery::mutateFrom(SFENoTypeQuery* notype)
+{
+	_type = notype->type();
+	_outblock.append(notype->outblock());
+	_inblock.append(notype->inblock());
+}
+
+SFEQuery::QueryType SFEQuery::type()
 {
 	return _type;
 }
+
+QByteArray SFEQuery::outblock()
+{
+	return _outblock;
+}
+
+QByteArray SFEQuery::inblock()
+{
+	return _inblock;
+}
+
+
+
 
 void SFEQuery::Send(QTcpSocket &socket)
 {

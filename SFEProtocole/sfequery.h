@@ -2,8 +2,10 @@
 #define SFEQUERY_H
 
 #include <QTcpSocket>
-
 #include "SFEProtocole_global.h"
+//#include "sfenotypequery.h"
+
+class SFENoTypeQuery;
 
 class SFEPROTOCOLESHARED_EXPORT SFEQuery
 {
@@ -16,8 +18,11 @@ public:
     };
 
     SFEQuery(QueryType atype);
+    void mutateFrom(SFENoTypeQuery* notype);
 
     QueryType type();
+    QByteArray outblock();
+    QByteArray inblock();
 
     void Send(QTcpSocket &socket);
     void Receive(QTcpSocket &socket);

@@ -19,11 +19,15 @@ void SFEProtocole::Receive(SFEQuery *query)
 }
 SFEQuery*  SFEProtocole::Receive()
 {
-	SFEQuery* rec = new SFENoTypeQuery();
-	SFEQuery* ret = 0;
+	SFENoTypeQuery* rec = new SFENoTypeQuery();
+	SFEQuery* ret;
 	Receive(rec);
 	if(rec->type()==SFEQuery::FILE)
-		ret = new SFEFileQuery(rec);
+	{
+		ret = (SFEQuery*) new SFEFileQuery();
+		ret->mutateFrom(rec);
+	}
 	ret->doReceive();
+	delete rec;
 	return ret;	
 }
