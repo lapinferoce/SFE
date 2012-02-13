@@ -10,8 +10,9 @@ SFEQuery::SFEQuery(QueryType atype):_out(&_outblock, QIODevice::WriteOnly),_in(&
 void SFEQuery::mutateFrom(SFENoTypeQuery* notype)
 {
 	_type = notype->type();
-	_outblock.append(notype->outblock());
-	_inblock.append(notype->inblock());
+	_outblock=notype->outblock();
+	_inblock = notype->inblock();
+	doReceive();	
 }
 
 SFEQuery::QueryType SFEQuery::type()

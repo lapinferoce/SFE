@@ -37,9 +37,10 @@ void SFEFileQuery::doSend()
       qDebug("filename");
       qDebug()<<z;
       _out << z;
-
       dump(blob);
-      _outblock.append( blob);
+    
+      _out << blob;
+     // _outblock.append( blob);
 
       qDebug(">> done");
 
@@ -73,13 +74,16 @@ void SFEFileQuery::doReceive()
 
 
     // pour le fun on passe par un qbuffer pas obligatoire !!!
-    QBuffer qb (&_inblock);
+    /*QBuffer qb (&_inblock);
     qb.open(QIODevice::ReadWrite);
-    qb.seek(_filename.size()+sizeof(QString)+sizeof(quint32));
+    qb.seek(_filename.size()+sizeof(QString)+sizeof(quint32));*/
             //>> array;
-    QByteArray array = qb.readAll();
+   /* QByteArray array = qb.readAll();
     dump(array);
-    qDebug()<< array;
+    qDebug()<< array;*/
+
+    QByteArray array;
+    _in >> array;
     QFile fileToSave(_filename.prepend(_baseDir));
     if(!fileToSave.open(QIODevice::WriteOnly))
     {

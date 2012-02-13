@@ -24,10 +24,10 @@ SFEQuery*  SFEProtocole::Receive()
 	Receive(rec);
 	if(rec->type()==SFEQuery::FILE)
 	{
-		ret = (SFEQuery*) new SFEFileQuery();
+		ret = (SFEQuery*) new SFEFileQuery("./tmp/");
 		ret->mutateFrom(rec);
 	}
-	ret->doReceive();
+	//ret->doReceive();
 	delete rec;
 	return ret;	
 }
