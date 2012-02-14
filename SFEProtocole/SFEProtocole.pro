@@ -16,6 +16,7 @@ DEFINES += SFEPROTOCOLE_LIBRARY
 SOURCES += sfeprotocole.cpp \
     sfequery.cpp \
     sfefilequery.cpp \
+    sfefilelistquery.cpp \
     sfenotypequery.cpp
 
 
@@ -23,6 +24,7 @@ HEADERS += sfeprotocole.h\
         SFEProtocole_global.h \
     sfequery.h \
     sfefilequery.h \
+    sfefilelistquery.h \
     sfenotypequery.h
 
 symbian {

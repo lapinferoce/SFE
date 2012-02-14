@@ -12,24 +12,8 @@ void SFEQuery::mutateFrom(SFENoTypeQuery* notype)
 	_type = notype->type();
 	_outblock.append(notype->outblock());
 	_inblock.append(notype->inblock());
-//	_in.seek(0);
-//	_in.seek(sizeof(quint32)*3);
-	quint32 toto;
-	_in >> toto;
-	qDebug() << "toto: ";
-	qDebug() << toto;
-
-	quint32 toto2;
-	_in >> toto2;
-	qDebug() << "toto2: ";
-	qDebug() << toto2;
-
-	quint32 toto3;
-	_in >> toto3;
-	qDebug() << "toto3: ";
-	qDebug() << toto3;
-
-
+	
+	_in.skipRawData(sizeof(quint32)*3);
 
 	dump(_inblock);
 	doReceive();	
@@ -120,7 +104,7 @@ void SFEQuery::Receive(QTcpSocket &socket)
 
 void SFEQuery::dump(QByteArray array)
 {
-    std::string s = QString(array.toHex()).toStdString();
+    /*std::string s = QString(array.toHex()).toStdString();
 
     QString formated;
     for(unsigned int i=0;i<s.length();i++)
@@ -134,5 +118,5 @@ void SFEQuery::dump(QByteArray array)
         }
     }
 
-    qDebug()<< "---\n"<<formated;
+    qDebug()<< "---\n"<<formated;*/
 }
