@@ -5,17 +5,17 @@
 {
 
 }*/
-SFEFileQuery::SFEFileQuery():SFEQuery(SFEQuery::FILE)
+SFEFileQuery::SFEFileQuery():SFEQuery(SFEQuery::FILE_TYPE)
 {
     _filename = "";
     _baseDir = "";
 }
-SFEFileQuery::SFEFileQuery(QString baseDir):SFEQuery(SFEQuery::FILE)
+SFEFileQuery::SFEFileQuery(QString baseDir):SFEQuery(SFEQuery::FILE_TYPE)
 {
     _filename = "";
     _baseDir = baseDir;
 }
-SFEFileQuery::SFEFileQuery(QString filename,QString baseDir):SFEQuery(SFEQuery::FILE)
+SFEFileQuery::SFEFileQuery(QString filename,QString baseDir):SFEQuery(SFEQuery::FILE_TYPE)
 {
     _filename = filename;
     _baseDir = baseDir;
@@ -44,25 +44,6 @@ void SFEFileQuery::doSend()
 
       qDebug(">> done");
 
-}
-
-void SFEFileQuery::dump(QByteArray array)
-{
-    std::string s = QString(array.toHex()).toStdString();
-
-    QString formated;
-    for(unsigned int i=0;i<s.length();i++)
-    {
-        formated+=s[i];
-        if(i%2==0)
-            formated+=" ";
-        if(i%32==0){
-            formated+="|\n";
-
-        }
-    }
-
-    qDebug()<< "---\n"<<formated;
 }
 
 void SFEFileQuery::doReceive()
@@ -94,6 +75,27 @@ void SFEFileQuery::doReceive()
     fileToSave.close();
     //int pos, int len
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

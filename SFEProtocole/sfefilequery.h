@@ -16,7 +16,6 @@ public:
 //    SFEFileQuery(QFile file);
     SFEFileQuery(QString filename,QString baseDir);
     SFEFileQuery(QString baseDir);
-    void dump(QByteArray array);
 
     void doSend();
     void doReceive();

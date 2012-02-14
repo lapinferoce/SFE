@@ -11,9 +11,6 @@ class SFEPROTOCOLESHARED_EXPORT SFENoTypeQuery : public SFEQuery
 {
 public:
     SFENoTypeQuery();
-//    SFENoTypeQuery(QFile file);
-    SFENoTypeQuery(QString filename,QString baseDir);
-    SFENoTypeQuery(QString baseDir);
 
     void doSend();
     void doReceive();

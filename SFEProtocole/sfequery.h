@@ -11,14 +11,16 @@ class SFEPROTOCOLESHARED_EXPORT SFEQuery
 {
 public:
     enum QueryType {
-                        FILE,
-                        LIST,
-			NOTYPE,
-                        UNDEFINED
+                        FILE_TYPE,
+                        LIST_TYPE,
+			NOTYPE_TYPE,
+                        UNDEFINED_TYPE
     };
 
     SFEQuery(QueryType atype);
     void mutateFrom(SFENoTypeQuery* notype);
+
+    void dump(QByteArray array);
 
     QueryType type();
     QByteArray outblock();

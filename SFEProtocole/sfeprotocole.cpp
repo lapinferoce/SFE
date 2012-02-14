@@ -22,7 +22,7 @@ SFEQuery*  SFEProtocole::Receive()
 	SFENoTypeQuery* rec = new SFENoTypeQuery();
 	SFEQuery* ret;
 	Receive(rec);
-	if(rec->type()==SFEQuery::FILE)
+	if(rec->type()==SFEQuery::FILE_TYPE)
 	{
 		ret = (SFEQuery*) new SFEFileQuery("./tmp/");
 		ret->mutateFrom(rec);
