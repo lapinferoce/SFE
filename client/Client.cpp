@@ -48,12 +48,12 @@ void Client::onTransfer()
 {
     SFEQuery* listFile;
     SFEQuery* query;
-    query = new SFEFileQuery("./test","./");
-    listFile = new SFEFileListQuery("/tmp","/tmp");
+    query = new SFEFileQuery("./tmp/toto","./tmp");
+//    listFile = new SFEFileListQuery("./tmp","./tmp");
 
     SFEProtocole protocole(client);
-    protocole.Send(listFile);
     protocole.Send(query);
+  //  protocole.Send(listFile);
     delete query;
     qDebug(">> done");
 /*

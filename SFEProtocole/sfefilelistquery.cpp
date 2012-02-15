@@ -4,29 +4,32 @@
 
 SFEFileListQuery::SFEFileListQuery():SFEQuery(SFEQuery::LIST_TYPE)
 {
-    _filename = "";
+    _browseDir = "";
     _baseDir = "";
 }
-SFEFileListQuery::SFEFileListQuery(QString baseDir):SFEQuery(SFEQuery::LIST_TYPE)
+SFEFileListQuery::SFEFileListQuery(QString browseDir):SFEQuery(SFEQuery::LIST_TYPE)
 {
-    _filename = "";
+    _browseDir = browseDir;
+    _baseDir = "";
+}
+SFEFileListQuery::SFEFileListQuery(QString browseDir ,QString baseDir):SFEQuery(SFEQuery::LIST_TYPE)
+{
+    _browseDir = browseDir;
     _baseDir = baseDir;
 }
-SFEFileListQuery::SFEFileListQuery(QString filename,QString baseDir):SFEQuery(SFEQuery::LIST_TYPE)
+QList<QString> SFEFileListQuery::fileList()
 {
-    _filename = filename;
-    _baseDir = baseDir;
+	return _fl;
 }
 // size type filepath data
 void SFEFileListQuery::doSend()
 {
-      QFile fileToSend(_filename);
 
-     QDirIterator directory_walker(_filename, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+     QDirIterator directory_walker(_browseDir, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
      while(directory_walker.hasNext())
      {
 	directory_walker.next();
-	QString s = directory_walker.fileInfo().fileName();
+	QString s = directory_walker.fileInfo().filePath();
 	QString z = s.replace(_baseDir,"",Qt::CaseSensitive);
 	_fl << z;
 	qDebug() << z;
@@ -42,9 +45,11 @@ void SFEFileListQuery::doReceive()
     _in >> fl;
     qDebug("fl:");
     QMutableListIterator<QString> javaIter( fl );
-    while( javaIter.hasNext() )
-    		_fl << javaIter.next().prepend(_baseDir);
-
+    while( javaIter.hasNext() ){
+		QString s = javaIter.next();
+    		_fl << s ;//javaIter.next()//.prepend(_baseDir);
+		qDebug() << s;
+	}
 }
 
 

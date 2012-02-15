@@ -1,6 +1,6 @@
 #include "sfefilequery.h"
 #include <QBuffer>
-
+#include <QDir>
 /*SFEFileQuery::SFEFileQuery(QFile file):SFEQuery(SFEQuery::FILE),_file(file)
 {
 
@@ -38,7 +38,8 @@ void SFEFileQuery::doSend()
       qDebug()<<z;
       _out << z;
       dump(blob);
-    
+	if(blob.size()==0)
+		qDebug() << "file empty !!"     
       _out << blob;
      // _outblock.append( blob);
 
@@ -65,13 +66,27 @@ void SFEFileQuery::doReceive()
 
     QByteArray array;
     _in >> array;
-    QFile fileToSave(_filename.prepend(_baseDir));
+
+    QString filepathname = _filename.prepend(_baseDir);
+    QFileInfo dfi(filepathname);
+    QDir dir = dfi.absoluteDir();
+    if(!dir.exists())
+    {
+	QDir dir2;
+	if(!dir2.mkpath(dfi.absoluteDir().path()))
+        {
+		qDebug()<< "error directory : "<< filepathname << "does not exist and cant be created";
+		return;
+	}
+    }
+    QFile fileToSave(filepathname);
     if(!fileToSave.open(QIODevice::WriteOnly))
     {
         qDebug() << "can not open";
         qDebug() << _filename;
     }
     fileToSave.write(array);
+    dump(array);
     fileToSave.close();
     //int pos, int len
 }
