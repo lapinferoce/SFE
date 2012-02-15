@@ -1,9 +1,10 @@
-#ifndef SFEFILEQUERY_H
-#define SFEFILEQUERY_H
+#ifndef SFEFILELISTQUERY_H
+#define SFEFILELISTQUERY_H
 
 
 #include <QString>
-#include <QFile>
+#include <QDir>
+#include <QDirIterator>
 
 #include "SFEProtocole_global.h"
 #include "sfequery.h"
@@ -22,8 +23,9 @@ public:
 private:
     QString _filename;
     QString _baseDir;
+    QList<QString> _fl;
   //  QFile& _file;
 
 };
 
-#endif // SFEFILEQUERY_H
+#endif // SFEFILELISTQUERY_H

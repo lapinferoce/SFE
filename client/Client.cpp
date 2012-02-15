@@ -6,6 +6,7 @@
 
 #include "sfeprotocole.h"
 #include "sfefilequery.h"
+#include "sfefilelistquery.h"
 #include "sfequery.h"
 
 using namespace std;
@@ -45,9 +46,13 @@ void Client::onError(QAbstractSocket::SocketError errno)
 
 void Client::onTransfer()
 {
+    SFEQuery* listFile;
     SFEQuery* query;
     query = new SFEFileQuery("./test","./");
+    listFile = new SFEFileListQuery("/tmp","/tmp");
+
     SFEProtocole protocole(client);
+    protocole.Send(listFile);
     protocole.Send(query);
     delete query;
     qDebug(">> done");

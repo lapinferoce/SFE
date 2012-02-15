@@ -1,17 +1,18 @@
 #include "sfefilelistquery.h"
 #include <QBuffer>
+#include <QMutableListIterator>
 
-SFEFileListQuery::SFEFileListQuery():SFEQuery(SFEQuery::FILE_TYPE)
+SFEFileListQuery::SFEFileListQuery():SFEQuery(SFEQuery::LIST_TYPE)
 {
     _filename = "";
     _baseDir = "";
 }
-SFEFileListQuery::SFEFileListQuery(QString baseDir):SFEQuery(SFEQuery::FILE_TYPE)
+SFEFileListQuery::SFEFileListQuery(QString baseDir):SFEQuery(SFEQuery::LIST_TYPE)
 {
     _filename = "";
     _baseDir = baseDir;
 }
-SFEFileListQuery::SFEFileListQuery(QString filename,QString baseDir):SFEQuery(SFEQuery::FILE_TYPE)
+SFEFileListQuery::SFEFileListQuery(QString filename,QString baseDir):SFEQuery(SFEQuery::LIST_TYPE)
 {
     _filename = filename;
     _baseDir = baseDir;
@@ -21,55 +22,29 @@ void SFEFileListQuery::doSend()
 {
       QFile fileToSend(_filename);
 
-      if (!fileToSend.open(QIODevice::ReadOnly))
-      {
-            qDebug("Failed!! file not found");
-      }
-
-
-      QByteArray blob = fileToSend.readAll();
-      //const QString & before, const QString & after, Qt::CaseSensitivity cs = Qt::CaseSensitive )
-      QString z = _filename.replace(_baseDir,"",Qt::CaseSensitive);
-      qDebug("filename");
-      qDebug()<<z;
-      _out << z;
-      dump(blob);
-    
-      _out << blob;
-     // _outblock.append( blob);
-
+     QDirIterator directory_walker(_filename, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+     while(directory_walker.hasNext())
+     {
+	directory_walker.next();
+	QString s = directory_walker.fileInfo().fileName();
+	QString z = s.replace(_baseDir,"",Qt::CaseSensitive);
+	_fl << z;
+	qDebug() << z;
+     }
+      _out << _fl;
       qDebug(">> done");
 
 }
 
 void SFEFileListQuery::doReceive()
 {
-    _in >> _filename;
-    qDebug("filename:");
-    qDebug()<<_filename;
-//    quint32 left = _size-(_filename.size()+sizeof(QString)+sizeof(quint32));
+    QList<QString> fl;
+    _in >> fl;
+    qDebug("fl:");
+    QMutableListIterator<QString> javaIter( fl );
+    while( javaIter.hasNext() )
+    		_fl << javaIter.next().prepend(_baseDir);
 
-
-    // pour le fun on passe par un qbuffer pas obligatoire !!!
-    /*QBuffer qb (&_inblock);
-    qb.open(QIODevice::ReadWrite);
-    qb.seek(_filename.size()+sizeof(QString)+sizeof(quint32));*/
-            //>> array;
-   /* QByteArray array = qb.readAll();
-    dump(array);
-    qDebug()<< array;*/
-
-    QByteArray array;
-    _in >> array;
-    QFile fileToSave(_filename.prepend(_baseDir));
-    if(!fileToSave.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "can not open";
-        qDebug() << _filename;
-    }
-    fileToSave.write(array);
-    fileToSave.close();
-    //int pos, int len
 }
 
 
