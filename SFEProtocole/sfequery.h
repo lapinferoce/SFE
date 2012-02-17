@@ -14,6 +14,9 @@ public:
                         FILE_TYPE,
                         LIST_TYPE,
 			NOTYPE_TYPE,
+			LS_TYPE,
+			GET_TYPE,
+			BIG_FILE_TYPE,
                         UNDEFINED_TYPE
     };
 

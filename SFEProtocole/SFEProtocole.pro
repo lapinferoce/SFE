@@ -15,16 +15,22 @@ DEFINES += SFEPROTOCOLE_LIBRARY
 
 SOURCES += sfeprotocole.cpp \
     sfequery.cpp \
+    sfegetquery.cpp \
+    sfelsquery.cpp \
     sfefilequery.cpp \
     sfefilelistquery.cpp \
+    sfebigfilequery.cpp\
     sfenotypequery.cpp
 
 
 HEADERS += sfeprotocole.h\
         SFEProtocole_global.h \
     sfequery.h \
+    sfegetquery.h \
+    sfelsquery.h \
     sfefilequery.h \
     sfefilelistquery.h \
+   sfebigfilequery.h\
     sfenotypequery.h
 
 symbian {

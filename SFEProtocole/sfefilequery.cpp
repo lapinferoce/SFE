@@ -38,8 +38,11 @@ void SFEFileQuery::doSend()
       qDebug()<<z;
       _out << z;
       dump(blob);
-	if(blob.size()==0)
-		qDebug() << "file empty !!"     
+      if(blob.size()==0)
+      {
+		qDebug() << "file empty !! not sending...";
+		return;
+      }
       _out << blob;
      // _outblock.append( blob);
 

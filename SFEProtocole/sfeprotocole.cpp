@@ -30,7 +30,15 @@ SFEQuery*  SFEProtocole::Receive()
 	{
 		ret = (SFEQuery*) new SFEFileListQuery("./tmp/");
 	}
-		ret->mutateFrom(rec);
+	else if(rec->type()==SFEQuery::GET_TYPE)
+	{
+		ret = (SFEQuery*) new SFEGetQuery();
+	}
+	else if(rec->type()==SFEQuery::LS_TYPE)
+	{
+		ret = (SFEQuery*) new SFELSQuery();
+	}
+	ret->mutateFrom(rec);
 	//ret->doReceive();
 	delete rec;
 	return ret;	
