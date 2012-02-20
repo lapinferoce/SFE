@@ -20,6 +20,8 @@ SOURCES += sfeprotocole.cpp \
     sfefilequery.cpp \
     sfefilelistquery.cpp \
     sfebigfilequery.cpp\
+    sfebigfilechunkquery.cpp\
+    sfeeofquery.cpp\
     sfenotypequery.cpp
 
 
@@ -31,6 +33,8 @@ HEADERS += sfeprotocole.h\
     sfefilequery.h \
     sfefilelistquery.h \
    sfebigfilequery.h\
+    sfebigfilechunkquery.h\
+    sfeeofquery.h \
     sfenotypequery.h
 
 symbian {

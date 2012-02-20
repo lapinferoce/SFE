@@ -27,7 +27,7 @@ void SFEBigFileQuery::doSend()
 
 
       QString z = _filename.replace(_baseDir,"",Qt::CaseSensitive);
-      qDebug("filename");
+      qDebug("filename:");
       qDebug()<<z;
       _out << z;
 
@@ -37,7 +37,8 @@ void SFEBigFileQuery::doSend()
 
 QString SFEBigFileQuery::filename()
 {
-	return _filename;
+       QString z =_filename;
+	return z.prepend(_baseDir);
 }
 
 void SFEBigFileQuery::doReceive()
@@ -46,7 +47,8 @@ void SFEBigFileQuery::doReceive()
     qDebug("filename:");
     qDebug()<<_filename;
 
-    QString filepathname = _filename.prepend(_baseDir);
+    QString filepathname =  _filename;
+    filepathname.prepend(_baseDir);
     QFileInfo dfi(filepathname);
     QDir dir = dfi.absoluteDir();
     if(!dir.exists())
@@ -60,26 +62,6 @@ void SFEBigFileQuery::doReceive()
     }
     //int pos, int len
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

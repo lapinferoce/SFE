@@ -17,9 +17,9 @@ class SFEPROTOCOLESHARED_EXPORT SFEProtocole {
 public:
     SFEProtocole(QTcpSocket& socket);
     void Send(SFEQuery* query);
-    void Receive(SFEQuery* query);
     SFEQuery* Receive();
 private:
+    void Receive(SFEQuery* query);
     QTcpSocket& _socket;
 };
 

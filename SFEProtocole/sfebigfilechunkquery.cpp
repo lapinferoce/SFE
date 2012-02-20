@@ -5,10 +5,10 @@
 {
 
 }*/
-SFEBigFileChunkQuery::SFEFileQuery():SFEQuery(SFEQuery::BIG_FILE_CHUNK)
+SFEBigFileChunkQuery::SFEBigFileChunkQuery():SFEQuery(SFEQuery::BIG_FILE_CHUNK_TYPE)
 {
 }
-SFEBigFileChunkQuery::SFEFileQuery(QByteArray blob):SFEQuery(SFEQuery::BIG_FILE_CHUNK)
+SFEBigFileChunkQuery::SFEBigFileChunkQuery(QByteArray blob):SFEQuery(SFEQuery::BIG_FILE_CHUNK_TYPE)
 {
     _blob = blob;
 }
@@ -16,27 +16,27 @@ SFEBigFileChunkQuery::SFEFileQuery(QByteArray blob):SFEQuery(SFEQuery::BIG_FILE_
 void SFEBigFileChunkQuery::doSend()
 {
 
-      dump(blob);
-      if(blob.size()==0)
+      dump(_blob);
+      if(_blob.size()==0)
       {
 		qDebug() << "file empty !! not sending...";
 		return;
       }
-      _out << blob;
+      _out << _blob;
 
       qDebug(">> done");
 
 }
 
 QByteArray SFEBigFileChunkQuery::blob(){
-	return _blob
+	return _blob;
 }
 
 void SFEBigFileChunkQuery::doReceive()
 {
 
-    _in >> blob;
-    dump(blob);
+    _in >> _blob;
+    dump(_blob);
 
 }
 

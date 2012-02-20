@@ -17,7 +17,8 @@ public:
 			LS_TYPE,
 			GET_TYPE,
 			BIG_FILE_TYPE,
-			BIG_FILE_CHUNCK_TYPE,
+			BIG_FILE_CHUNK_TYPE,
+			EOF_TYPE,
                         UNDEFINED_TYPE
     };
 

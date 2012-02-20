@@ -13,18 +13,19 @@ void SFEProtocole::Send(SFEQuery *query)
 	{
 		QString filepathname = ((SFEBigFileQuery*)query)->filename();
 		QFile fileToSend(filepathname);
-
+	
 		if (!fileToSend.open(QIODevice::ReadOnly))
 		{
-			qDebug("Failed!! file not found");
+			qDebug() << "Failed!! file not found" << filepathname;
 		}                                         	
-
+		
 		while(!fileToSend.atEnd())
 		{
 			QByteArray chunkBlob = fileToSend.read(50000); //50ko
 			SFEBigFileChunkQuery* chunk= new SFEBigFileChunkQuery(chunkBlob);
 			chunk->Send(_socket);
 			delete chunk;
+			qDebug() << "sending " << chunkBlob.size();
 		}	
 		fileToSend.close();
 	}
@@ -40,6 +41,36 @@ SFEQuery*  SFEProtocole::Receive()
 	SFENoTypeQuery* rec = new SFENoTypeQuery();
 	SFEQuery* ret;
 	Receive(rec);
+
+	if(rec->type()==SFEQuery::BIG_FILE_TYPE)
+	{
+		ret = (SFEQuery*) new SFEBigFileQuery("./tmp/");
+		ret->mutateFrom(rec);
+	
+		QString filepathname = ((SFEBigFileQuery*)ret)->filename();
+		QFile file(filepathname);
+		SFENoTypeQuery* q = new SFENoTypeQuery();
+			
+	       
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			qDebug()<< "can not open" << filepathname ;
+		}
+		do
+		{
+			Receive(q);
+			if(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE){
+				qDebug() << "#" ; 
+				file.write(((SFEBigFileChunkQuery*)q)->blob());
+				delete q;
+				q = new SFENoTypeQuery();
+			}
+			qDebug("Failed!! file not found");
+		} while(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE);
+		
+		return ret;                                    	
+	}
+
 	if(rec->type()==SFEQuery::FILE_TYPE)
 	{
 		ret = (SFEQuery*) new SFEFileQuery("./tmp/");
@@ -56,52 +87,11 @@ SFEQuery*  SFEProtocole::Receive()
 	{
 		ret = (SFEQuery*) new SFELSQuery();
 	}
-    	else if(query->type()==SFEQuery::BIG_FILE_TYPE)
-	{
-	
-		QString filepathname = ((SFEBigFileQuery*)query)->filename();
-		QFile fileToSend(filepathname);
-		SFEQuery* q = new SFEQuery();
-		
-	   
-		if (!fileToSend.open(QIODevice::WriteOnly))
-		{
-			qDebug()<< "can not open" << filepathname ;
-		}
-		do{
-			q->Receive(_socket);
-			if(q->type()==SFEQuery::BIG_FILE_CHUNCK_TYPE){
-				fileToSend.write((SFEBigFileQuery*)q->blob);
-				delete q;
-				q = new SFEQuery();
-			}
-			qDebug("Failed!! file not found");
-		} while(q->type()==SFEQuery::BIG_FILE_CHUNCK_TYPE);
-		query=q;                                     	
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	ret->mutateFrom(rec);
 	//ret->doReceive();
 	delete rec;
+	
 	return ret;	
+
 }

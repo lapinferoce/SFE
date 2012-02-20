@@ -48,7 +48,7 @@ void Client::onTransfer()
 {
     SFEQuery* listFile;
     SFEQuery* query;
-    query = new SFEFileQuery("./tmp/toto","./tmp");
+    query = new SFEBigFileQuery("./tmp/toto","./tmp");
 //    listFile = new SFEFileListQuery("./tmp","./tmp");
 
     SFEProtocole protocole(client);
