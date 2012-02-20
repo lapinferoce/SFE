@@ -9,7 +9,7 @@
 #include "sfequery.h"
 
 
-class SFEPROTOCOLESHARED_EXPORT SFEBigFileChunkQuery : public SFEBigFileChunkQuery
+class SFEPROTOCOLESHARED_EXPORT SFEBigFileChunkQuery : public SFEQuery
 {
 public:
     SFEBigFileChunkQuery();
