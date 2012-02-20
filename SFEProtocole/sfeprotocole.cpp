@@ -9,6 +9,25 @@ SFEProtocole::SFEProtocole(QTcpSocket& socket):_socket(socket)
 void SFEProtocole::Send(SFEQuery *query)
 {
     query->Send(_socket);
+    if(query->type()==SFEQuery::BIG_FILE_TYPE)
+	{
+		QString filepathname = ((SFEBigFileQuery*)query)->filename();
+		QFile fileToSend(filepathname);
+
+		if (!fileToSend.open(QIODevice::ReadOnly))
+		{
+			qDebug("Failed!! file not found");
+		}                                         	
+
+		while(!fileToSend.atEnd())
+		{
+			QByteArray chunkBlob = fileToSend.read(50000); //50ko
+			SFEBigFileChunkQuery* chunk= new SFEBigFileChunkQuery(chunkBlob);
+			chunk->send(_socket);
+			delete chunk;
+		}	
+		fileToSend.close();
+	}
 
 }
 
@@ -16,6 +35,29 @@ void SFEProtocole::Receive(SFEQuery *query)
 {
     query->Receive(_socket);
 
+    if(query->type()==SFEQuery::BIG_FILE_TYPE)
+	{
+	
+		QString filepathname = ((SFEBigFileQuery*)query)->filename();
+		QFile fileToSend(filepathname);
+		SFEQuery* q = new SFEQuery();
+		
+	   
+	if (!fileToSend.open(QIODevice::WriteOnly))
+	{
+		qDebug()<< "can not open" << filepathname ;
+	}
+		do{
+			q->Receive(_socket);
+			if(q->type()==SFEQuery::BIG_FILE_CHUNCK_TYPE){
+				fileToSend.write((SFEBigFileQuery*)q->blob);
+				delete q;
+				q = new SFEQuery();
+			}
+			qDebug("Failed!! file not found");
+		} while(q->type()==SFEQuery::BIG_FILE_CHUNCK_TYPE);
+		query=q;                                     	
+	}
 }
 SFEQuery*  SFEProtocole::Receive()
 {

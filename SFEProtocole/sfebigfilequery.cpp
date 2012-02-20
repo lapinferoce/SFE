@@ -35,6 +35,11 @@ void SFEBigFileQuery::doSend()
 
 }
 
+QString SFEBigFileQuery::filename()
+{
+	return _filename;
+}
+
 void SFEBigFileQuery::doReceive()
 {
     _in >> _filename;

@@ -17,6 +17,8 @@ public:
     SFEBigFileQuery(QString filename,QString baseDir);
     SFEBigFileQuery(QString baseDir);
 
+    QString filename();
+
     void doSend();
     void doReceive();
 private:
