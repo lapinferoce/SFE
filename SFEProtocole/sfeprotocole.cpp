@@ -50,28 +50,36 @@ SFEQuery*  SFEProtocole::Receive()
 		QString filepathname = ((SFEBigFileQuery*)ret)->filename();
 		qDebug()<< "filename "<< filepathname;
 		QFile file(filepathname);
-		SFENoTypeQuery* q = new SFENoTypeQuery();
+		
 			
 	       
 		if (!file.open(QIODevice::WriteOnly))
 		{
 			qDebug()<< "can not open" << filepathname ;
 		}
-		do
-		{
-			Receive(q);
+		SFENoTypeQuery* q = new SFENoTypeQuery();
+		qDebug() << "recv";
+        	q->Receive(_socket);
+        	qDebug() << "ecv done";
+		while(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE)
+		{	
 			if(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE)
 			{
 				SFEBigFileChunkQuery* bcfq=new SFEBigFileChunkQuery();
+				qDebug("alive");
 				bcfq->mutateFrom(q);
 				qDebug() << "#" ; 
 				file.write(bcfq->blob());
+				qDebug() << "wrote";
 				delete q;
 				delete bcfq;
 				q = new SFENoTypeQuery();
+				qDebug() << "recv";
+				q->Receive(_socket);
+				qDebug() << "ecv done";
 			}
-		} while(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE);
-		
+		}
+		file.close();
 		return ret;                                    	
 	}
 

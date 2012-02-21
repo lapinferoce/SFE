@@ -10,6 +10,9 @@
 *.lai
 *.la
 *.a
-
-client
-server
+# Test
+client/test/*
+server/test/*
+# bin
+client/client
+server/server

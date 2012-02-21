@@ -10,6 +10,8 @@ SFEBigFileChunkQuery::SFEBigFileChunkQuery():SFEQuery(SFEQuery::BIG_FILE_CHUNK_T
 }
 SFEBigFileChunkQuery::SFEBigFileChunkQuery(QByteArray blob):SFEQuery(SFEQuery::BIG_FILE_CHUNK_TYPE)
 {
+    qDebug() << "dumping";
+     dump(_blob);
     _blob = blob;
 }
 // size type filepath data

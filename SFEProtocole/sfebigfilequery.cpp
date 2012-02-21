@@ -23,9 +23,6 @@ SFEBigFileQuery::SFEBigFileQuery(QString filename,QString baseDir):SFEQuery(SFEQ
 // size type filepath data
 void SFEBigFileQuery::doSend()
 {
-      QFile fileToSend(_filename);
-
-
       QString z = _filename.replace(_baseDir,"",Qt::CaseSensitive);
       qDebug("filename:");
       qDebug()<<z;
@@ -48,7 +45,7 @@ QString SFEBigFileQuery::filename()
 void SFEBigFileQuery::doReceive()
 {
     _in >> _filename;
-    qDebug("filename:");
+    qDebug("filename:=>");
     qDebug()<<_filename;
 
     QString filepathname =  _filename;

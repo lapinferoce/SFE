@@ -13,7 +13,7 @@ void SFEQuery::mutateFrom(SFENoTypeQuery* notype)
 	_outblock.append(notype->outblock());
 	_inblock.append(notype->inblock());
 	
-	_in.skipRawData(sizeof(quint32)*3);
+	_in.skipRawData(sizeof(quint32)*2);
 
 	dump(_inblock);
 	doReceive();	
@@ -73,14 +73,14 @@ void SFEQuery::Receive(QTcpSocket &socket)
         socket.waitForReadyRead(1000);
 
     qDebug("reading %d",sizeof(quint32));
-    QByteArray ba = socket.peek(sizeof(quint32));
+    QByteArray ba = socket.read(sizeof(quint32));
     _inblock.append(ba);
 
     _in >> _size;
 
     qDebug("cmd size: %d",_size);
 
-   quint32 left = _size;//- sizeof(quint32);
+   quint32 left = _size- sizeof(quint32);
 
     while(socket.bytesAvailable()<left){
         qDebug("2 available: %d",(int)socket.bytesAvailable());
@@ -88,9 +88,9 @@ void SFEQuery::Receive(QTcpSocket &socket)
     }
     qDebug("reading: %d",left);
 
-    QByteArray ba2 = socket.peek(left);
+    QByteArray ba2 = socket.read(left);
     _inblock.append(ba2);
-    _in.skipRawData(sizeof(quint32));
+//    _in.skipRawData(sizeof(quint32));
     quint32 type;
     _in >> type;
 
@@ -104,7 +104,8 @@ void SFEQuery::Receive(QTcpSocket &socket)
 
 void SFEQuery::dump(QByteArray array)
 {
-    /*std::string s = QString(array.toHex()).toStdString();
+/*
+    std::string s = QString(array.toHex()).toStdString();
 
     QString formated;
     for(unsigned int i=0;i<s.length();i++)
@@ -118,5 +119,6 @@ void SFEQuery::dump(QByteArray array)
         }
     }
 
-    qDebug()<< "---\n"<<formated;*/
+    qDebug()<< "---\n"<<formated;
+*/
 }
