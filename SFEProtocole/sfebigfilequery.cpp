@@ -37,8 +37,12 @@ void SFEBigFileQuery::doSend()
 
 QString SFEBigFileQuery::filename()
 {
+	qDebug()<< "filename" << _filename;
+	qDebug()<< "_basename"<< _baseDir;
        QString z =_filename;
-	return z.prepend(_baseDir);
+	z.prepend(_baseDir);
+	qDebug() << "z:" << z; 
+	return z;
 }
 
 void SFEBigFileQuery::doReceive()
@@ -63,11 +67,3 @@ void SFEBigFileQuery::doReceive()
     //int pos, int len
 }
 
-
-
-/*
-fileQuery fq(file);
-protocole.send(fq);
-
-protocole.recieve();
-*/

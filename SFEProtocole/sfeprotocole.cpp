@@ -48,6 +48,7 @@ SFEQuery*  SFEProtocole::Receive()
 		ret->mutateFrom(rec);
 	
 		QString filepathname = ((SFEBigFileQuery*)ret)->filename();
+		qDebug()<< "filename "<< filepathname;
 		QFile file(filepathname);
 		SFENoTypeQuery* q = new SFENoTypeQuery();
 			
@@ -59,13 +60,16 @@ SFEQuery*  SFEProtocole::Receive()
 		do
 		{
 			Receive(q);
-			if(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE){
+			if(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE)
+			{
+				SFEBigFileChunkQuery* bcfq=new SFEBigFileChunkQuery();
+				bcfq->mutateFrom(q);
 				qDebug() << "#" ; 
-				file.write(((SFEBigFileChunkQuery*)q)->blob());
+				file.write(bcfq->blob());
 				delete q;
+				delete bcfq;
 				q = new SFENoTypeQuery();
 			}
-			qDebug("Failed!! file not found");
 		} while(q->type()==SFEQuery::BIG_FILE_CHUNK_TYPE);
 		
 		return ret;                                    	
