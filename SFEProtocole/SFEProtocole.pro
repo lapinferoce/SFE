@@ -55,3 +55,5 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+CONFIG += qt debug

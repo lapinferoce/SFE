@@ -11,6 +11,7 @@
 #include "sfelsquery.h"
 #include "sfebigfilequery.h"
 #include "sfebigfilechunkquery.h"
+#include "sfeeofquery.h"
 #include "SFEProtocole_global.h"
 
 class SFEPROTOCOLESHARED_EXPORT SFEProtocole {

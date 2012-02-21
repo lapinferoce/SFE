@@ -19,3 +19,5 @@ else:unix: LIBS += -L$$PWD/../SFEProtocole -lSFEProtocole
 
 INCLUDEPATH += $$PWD/../SFEProtocole
 DEPENDPATH += $$PWD/../SFEProtocole
+
+CONFIG += qt debug

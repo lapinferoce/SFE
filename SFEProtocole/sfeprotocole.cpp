@@ -79,7 +79,12 @@ SFEQuery*  SFEProtocole::Receive()
 				qDebug() << "ecv done";
 			}
 		}
+		if(q->type()==SFEQuery::EOF_TYPE)
+		{
+			SFEEOFQuery* eof=new SFEEOFQuery();
+			eof->mutateFrom(q);	 
 		file.close();
+		}
 		return ret;                                    	
 	}
 
