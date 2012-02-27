@@ -28,6 +28,9 @@ void SFEProtocole::Send(SFEQuery *query)
 			qDebug() << "sending " << chunkBlob.size();
 		}	
 		fileToSend.close();
+		SFEEOFQuery* eof=new SFEEOFQuery();
+		eof->Send(_socket);
+		delete eof;	
 	}
 
 }

@@ -46,18 +46,21 @@ void Client::onError(QAbstractSocket::SocketError errno)
 
 void Client::onTransfer()
 {
-    SFEQuery* listFile;
-    SFEQuery* listFile2;
+    //SFEQuery* listFile;
+    //SFEQuery* listFile2;
     SFEQuery* query;
     query = new SFEBigFileQuery("./tmp/toto","./tmp/");
 
-    listFile = new SFEFileListQuery("./tmp","./tmp");
-    listFile2 = new SFEGetQuery("./tmp/toto");
+    SFEQuery* query2;
+    query2 = new SFEBigFileQuery("./tmp/tata","./tmp/");
+    //listFile = new SFEFileListQuery("./tmp","./tmp");
+    //listFile2 = new SFEGetQuery("./tmp/toto");
     SFEProtocole protocole(client);
 //   
-      protocole.Send(listFile2); 
+    //  protocole.Send(listFile2); 
       protocole.Send(query);
-      protocole.Send(listFile);   
+ protocole.Send(query2);
+     // protocole.Send(listFile);   
     //protocole.Send(query);
     
     delete query;
